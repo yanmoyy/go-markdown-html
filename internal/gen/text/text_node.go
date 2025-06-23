@@ -17,21 +17,47 @@ const (
 	textImage
 )
 
-type textNode struct {
+func (t textType) String() string {
+	switch t {
+	case textPlain:
+		return "Plain"
+	case textBold:
+		return "Bold"
+	case textItalic:
+		return "Italic"
+	case textCode:
+		return "Code"
+	case textLink:
+		return "Link"
+	case textImage:
+		return "Image"
+	default:
+		return "Unknown"
+	}
+}
+
+type Node struct {
 	textType textType
 	value    string
 	url      string
 }
 
-func NewTextNode(textType textType, value string, url string) *textNode {
-	return &textNode{
+func NewTextNode(textType textType, value string, url string) *Node {
+	return &Node{
 		textType: textType,
 		value:    value,
 		url:      url,
 	}
 }
 
-func (n *textNode) toHTMLNode() (*html.Node, error) {
+func (n *Node) String() string {
+	if n.url == "" {
+		return fmt.Sprintf("Node{type: %v, value: %s}", n.textType, n.value)
+	}
+	return fmt.Sprintf("Node{type: %v, value: %s, url: %s}", n.textType, n.value, n.url)
+}
+
+func (n *Node) toHTMLNode() (*html.Node, error) {
 	switch n.textType {
 	case textPlain:
 		return html.NewLeafNode("p", n.value, nil), nil

@@ -5,13 +5,13 @@ import "testing"
 func TestTextNodeToHTMLNode(t *testing.T) {
 	tests := []struct {
 		name    string
-		node    *textNode
+		node    *Node
 		want    string
 		wantErr bool
 	}{
 		{
 			name: "plain text",
-			node: &textNode{
+			node: &Node{
 				textType: textPlain,
 				value:    "plain text",
 			},
@@ -20,7 +20,7 @@ func TestTextNodeToHTMLNode(t *testing.T) {
 		},
 		{
 			name: "bold text",
-			node: &textNode{
+			node: &Node{
 				textType: textBold,
 				value:    "bold text",
 			},
@@ -29,7 +29,7 @@ func TestTextNodeToHTMLNode(t *testing.T) {
 		},
 		{
 			name: "italic text",
-			node: &textNode{
+			node: &Node{
 				textType: textItalic,
 				value:    "italic text",
 			},
@@ -38,7 +38,7 @@ func TestTextNodeToHTMLNode(t *testing.T) {
 		},
 		{
 			name: "code text",
-			node: &textNode{
+			node: &Node{
 				textType: textCode,
 				value:    "code text",
 			},
@@ -47,7 +47,7 @@ func TestTextNodeToHTMLNode(t *testing.T) {
 		},
 		{
 			name: "link text",
-			node: &textNode{
+			node: &Node{
 				textType: textLink,
 				value:    "link text",
 				url:      "https://example.com",
@@ -57,7 +57,7 @@ func TestTextNodeToHTMLNode(t *testing.T) {
 		},
 		{
 			name: "image text",
-			node: &textNode{
+			node: &Node{
 				textType: textImage,
 				value:    "image text",
 				url:      "https://example.com/image.png",
