@@ -19,21 +19,21 @@ type Node struct {
 	tag      string
 	value    string
 	props    Props
-	children []*Node
+	children []Node
 }
 
-func NewLeafNode(tag, value string, props Props) *Node {
-	return &Node{
+func NewLeafNode(tag, value string, props Props) Node {
+	return Node{
 		nodeType: typeLeaf,
 		tag:      tag,
 		value:    value,
 		props:    props,
-		children: []*Node{},
+		children: []Node{},
 	}
 }
 
-func NewParentNode(tag string, children []*Node, props Props) *Node {
-	return &Node{
+func NewParentNode(tag string, children []Node, props Props) Node {
+	return Node{
 		nodeType: typeParent,
 		tag:      tag,
 		props:    props,

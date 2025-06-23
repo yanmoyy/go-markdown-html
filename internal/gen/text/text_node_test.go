@@ -68,7 +68,7 @@ func TestTextNodeToHTMLNode(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := tt.node.toHTMLNode()
+			got, err := tt.node.ToHTMLNode()
 			if (err != nil) != tt.wantErr {
 				t.Errorf("toHTMLNode() error = %v, wantErr %v", err, tt.wantErr)
 				return

@@ -11,7 +11,7 @@ const (
 	delimiterCode   = "`"
 )
 
-func textToTextNodes(text string) ([]Node, error) {
+func TextToTextNodes(text string) ([]Node, error) {
 	nodes := []Node{
 		{textType: textPlain, value: text},
 	}

@@ -57,7 +57,7 @@ func (n *Node) String() string {
 	return fmt.Sprintf("Node{type: %v, value: %s, url: %s}", n.textType, n.value, n.url)
 }
 
-func (n *Node) toHTMLNode() (*html.Node, error) {
+func (n *Node) ToHTMLNode() (html.Node, error) {
 	switch n.textType {
 	case textPlain:
 		return html.NewLeafNode("p", n.value, nil), nil
@@ -77,6 +77,6 @@ func (n *Node) toHTMLNode() (*html.Node, error) {
 			"alt": n.value,
 		}), nil
 	default:
-		return nil, fmt.Errorf("unknown text type: %d", n.textType)
+		return html.Node{}, fmt.Errorf("unknown text type: %d", n.textType)
 	}
 }

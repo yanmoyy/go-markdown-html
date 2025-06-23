@@ -52,7 +52,7 @@ func TestPropsToHTML(t *testing.T) {
 
 func TestToHTML(t *testing.T) {
 	type args struct {
-		node *Node
+		node Node
 	}
 	tests := []struct {
 		name    string
@@ -84,7 +84,7 @@ func TestToHTML(t *testing.T) {
 		{
 			name: "parent",
 			args: args{
-				node: NewParentNode("div", []*Node{
+				node: NewParentNode("div", []Node{
 					NewLeafNode("p", "foo", Props{}),
 					NewLeafNode("p", "bar", Props{}),
 				}, Props{}),
@@ -94,7 +94,7 @@ func TestToHTML(t *testing.T) {
 		{
 			name: "parent-empty-tag",
 			args: args{
-				node: NewParentNode("", []*Node{
+				node: NewParentNode("", []Node{
 					NewLeafNode("p", "foo", Props{}),
 					NewLeafNode("p", "bar", Props{}),
 				}, Props{}),
@@ -104,7 +104,7 @@ func TestToHTML(t *testing.T) {
 		{
 			name: "parent-empty-children",
 			args: args{
-				node: NewParentNode("div", []*Node{}, Props{}),
+				node: NewParentNode("div", []Node{}, Props{}),
 			},
 			wantErr: true,
 		},

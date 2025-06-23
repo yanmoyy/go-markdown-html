@@ -16,6 +16,25 @@ const (
 	blockUList // Unordered List
 )
 
+func (t blockType) String() string {
+	switch t {
+	case blockParagraph:
+		return "paragraph"
+	case blockHeader:
+		return "header"
+	case blockCode:
+		return "code"
+	case blockQuote:
+		return "quote"
+	case blockOList:
+		return "olist"
+	case blockUList:
+		return "ulist"
+	default:
+		return "unknown"
+	}
+}
+
 func markdownToBlocks(markdown string) []string {
 	blocks := strings.Split(markdown, "\n\n")
 	filtered := []string{}
@@ -37,7 +56,7 @@ func getBlockType(block string) blockType {
 			return blockHeader
 		}
 	}
-	if len(lines) > 1 && strings.HasPrefix(lines[1], "```") && strings.HasSuffix(lines[len(lines)-1], "```") {
+	if len(lines) > 1 && strings.HasPrefix(lines[0], "```") && strings.HasSuffix(lines[len(lines)-1], "```") {
 		return blockCode
 	}
 	if strings.HasPrefix(block, ">") {
