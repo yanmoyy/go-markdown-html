@@ -2,7 +2,6 @@ package text
 
 import (
 	"fmt"
-	"strings"
 )
 
 const (
@@ -12,35 +11,25 @@ const (
 	delimiterCode   = "`"
 )
 
-func splitNodesDelimiter(oldNodes []*Node, delimiter string, textType textType) ([]*Node, error) {
-	newNodes := []*Node{}
-	for _, node := range oldNodes {
-		if node.textType != textPlain {
-			newNodes = append(newNodes, node)
-			continue
-		}
-		sections := strings.Split(node.value, delimiter)
-		if len(sections)%2 == 0 {
-			return nil, fmt.Errorf("invalid markdown: delimiter %s is not closed", delimiter)
-		}
-		for i, sec := range sections {
-			if sec == "" {
-				continue
-			}
-			if i%2 == 0 {
-				// not inside delimiter
-				newNodes = append(newNodes, &Node{
-					textType: textPlain,
-					value:    sec,
-				})
-			} else {
-				// inside delimiter
-				newNodes = append(newNodes, &Node{
-					textType: textType,
-					value:    sec,
-				})
-			}
-		}
+func textToTextNodes(text string) ([]Node, error) {
+	nodes := []Node{
+		{textType: textPlain, value: text},
 	}
-	return newNodes, nil
+	nodes, err := splitNodesDelimiter(nodes, delimiterBold, textBold)
+	if err != nil {
+		return nil, fmt.Errorf("error (bold): ")
+	}
+	nodes, err = splitNodesDelimiter(nodes, delimiterItalic, textItalic)
+	if err != nil {
+		return nil, fmt.Errorf("error (italic): ")
+	}
+	nodes, err = splitNodesDelimiter(nodes, delimiterCode, textCode)
+	if err != nil {
+		return nil, fmt.Errorf("error (code): ")
+	}
+	nodes, err = splitNodesRef(nodes)
+	if err != nil {
+		return nil, fmt.Errorf("error (ref): ")
+	}
+	return nodes, nil
 }
