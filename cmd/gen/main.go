@@ -19,7 +19,7 @@ func main() {
 	fmt.Println("Markdown to HTML")
 	basePath := "/"
 	if len(os.Args) == 2 {
-		basePath = os.Args[1]
+		basePath = "/" + os.Args[1] + "/"
 	}
 	fmt.Printf("Enter Markdown directory path: (Default: %s)\n> ", markdownDirPath)
 	mdPath := getInput()

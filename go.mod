@@ -1,4 +1,4 @@
-module github.com/yanmoyy/go-markdown-html
+module github.com/yanmoyy/go-static-site-generator
 
 go 1.24.3
 
