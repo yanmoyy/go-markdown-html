@@ -3,6 +3,8 @@ package gen
 import (
 	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestMarkdownToBlocks(t *testing.T) {
@@ -100,6 +102,57 @@ func TestGetBlockType(t *testing.T) {
 			if got := getBlockType(tt.args.block); got != tt.want {
 				t.Errorf("got = %+v, want = %+v", got, tt.want)
 			}
+		})
+	}
+}
+
+func TestExtractTitle(t *testing.T) {
+	type args struct {
+		markdown string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    string
+		wantErr bool
+	}{
+		{
+			name: "sample markdown",
+			args: args{
+				markdown: `
+# This is a title
+
+This is a paragraph
+`,
+			},
+			want: "This is a title",
+		},
+		{
+			name: "no content",
+			args: args{
+				markdown: ``,
+			},
+			wantErr: true,
+		},
+		{
+			name: "no header",
+			args: args{
+				markdown: `
+This is a paragraph
+`,
+			},
+			wantErr: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := extractTitle(tt.args.markdown)
+			if tt.wantErr {
+				assert.Error(t, err)
+				return
+			}
+			assert.NoError(t, err)
+			assert.Equal(t, tt.want, got)
 		})
 	}
 }

@@ -50,6 +50,19 @@ func markdownToHTMLNode(markdown string) (html.Node, error) {
 	return html.NewParentNode("div", children, nil), nil
 }
 
+func extractTitle(markdown string) (string, error) {
+	blocks := markdownToBlocks(markdown)
+	if len(blocks) == 0 {
+		return "", fmt.Errorf("no content")
+	}
+	lines := strings.SplitN(blocks[0], "\n", 2)
+	if !strings.HasPrefix(lines[0], "# ") {
+		return "", fmt.Errorf("first line is not a header (H1)")
+	}
+	text := strings.TrimPrefix(lines[0], "# ")
+	return text, nil
+}
+
 func markdownToBlocks(markdown string) []string {
 	blocks := strings.Split(markdown, "\n\n")
 	filtered := []string{}
