@@ -7,15 +7,17 @@ import (
 	"github.com/yanmoyy/go-markdown-html/internal/gen"
 )
 
+// Default paths
 const (
 	markdownDirPath = "./files/content"
 	outputDirPath   = "./files/output"
 	templatePath    = "./template.html"
+	staticDirPath   = "./files/static"
 )
 
 func main() {
 	fmt.Println("Markdown to HTML")
-	basePath := ""
+	basePath := "/"
 	if len(os.Args) == 2 {
 		basePath = os.Args[1]
 	}
@@ -31,7 +33,21 @@ func main() {
 		outPath = outputDirPath
 	}
 	fmt.Println("path: ", outPath)
-	err := gen.GeneratePagesRecursive(mdPath, templatePath, outPath, basePath)
+
+	fmt.Println("Deleteing old output directory")
+	err := os.RemoveAll(outPath)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+	fmt.Println("Copying static files")
+	err = gen.CopyStaticFilesRecursive(staticDirPath, outPath)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+	fmt.Println("Generating pages")
+	err = gen.GeneratePagesRecursive(mdPath, templatePath, outPath, basePath)
 	if err != nil {
 		fmt.Println("Error:", err)
 		return

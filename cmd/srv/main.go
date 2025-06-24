@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	htmlPath = "./html"
+	htmlPath = "./files/output"
 )
 
 func main() {
