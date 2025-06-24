@@ -12,7 +12,7 @@ func TestTextNodeToHTMLNode(t *testing.T) {
 		{
 			name: "plain text",
 			node: &Node{
-				textType: textPlain,
+				textType: TextPlain,
 				value:    "plain text",
 			},
 			want:    "<p>plain text</p>",
@@ -21,7 +21,7 @@ func TestTextNodeToHTMLNode(t *testing.T) {
 		{
 			name: "bold text",
 			node: &Node{
-				textType: textBold,
+				textType: TextBold,
 				value:    "bold text",
 			},
 			want:    "<b>bold text</b>",
@@ -30,7 +30,7 @@ func TestTextNodeToHTMLNode(t *testing.T) {
 		{
 			name: "italic text",
 			node: &Node{
-				textType: textItalic,
+				textType: TextItalic,
 				value:    "italic text",
 			},
 			want:    "<i>italic text</i>",
@@ -39,7 +39,7 @@ func TestTextNodeToHTMLNode(t *testing.T) {
 		{
 			name: "code text",
 			node: &Node{
-				textType: textCode,
+				textType: TextCode,
 				value:    "code text",
 			},
 			want:    "<code>code text</code>",
@@ -48,7 +48,7 @@ func TestTextNodeToHTMLNode(t *testing.T) {
 		{
 			name: "link text",
 			node: &Node{
-				textType: textLink,
+				textType: TextLink,
 				value:    "link text",
 				url:      "https://example.com",
 			},
@@ -58,7 +58,7 @@ func TestTextNodeToHTMLNode(t *testing.T) {
 		{
 			name: "image text",
 			node: &Node{
-				textType: textImage,
+				textType: TextImage,
 				value:    "image text",
 				url:      "https://example.com/image.png",
 			},

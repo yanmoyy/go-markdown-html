@@ -6,30 +6,30 @@ import (
 	"github.com/yanmoyy/go-markdown-html/internal/gen/html"
 )
 
-type textType int
+type TextType int
 
 const (
-	textPlain textType = iota
-	textBold
-	textItalic
-	textCode
-	textLink
-	textImage
+	TextPlain TextType = iota
+	TextBold
+	TextItalic
+	TextCode
+	TextLink
+	TextImage
 )
 
-func (t textType) String() string {
+func (t TextType) String() string {
 	switch t {
-	case textPlain:
+	case TextPlain:
 		return "Plain"
-	case textBold:
+	case TextBold:
 		return "Bold"
-	case textItalic:
+	case TextItalic:
 		return "Italic"
-	case textCode:
+	case TextCode:
 		return "Code"
-	case textLink:
+	case TextLink:
 		return "Link"
-	case textImage:
+	case TextImage:
 		return "Image"
 	default:
 		return "Unknown"
@@ -37,13 +37,13 @@ func (t textType) String() string {
 }
 
 type Node struct {
-	textType textType
+	textType TextType
 	value    string
 	url      string
 }
 
-func NewTextNode(textType textType, value string, url string) *Node {
-	return &Node{
+func NewTextNode(textType TextType, value string, url string) Node {
+	return Node{
 		textType: textType,
 		value:    value,
 		url:      url,
@@ -59,19 +59,19 @@ func (n *Node) String() string {
 
 func (n *Node) ToHTMLNode() (html.Node, error) {
 	switch n.textType {
-	case textPlain:
+	case TextPlain:
 		return html.NewLeafNode("p", n.value, nil), nil
-	case textBold:
+	case TextBold:
 		return html.NewLeafNode("b", n.value, nil), nil
-	case textItalic:
+	case TextItalic:
 		return html.NewLeafNode("i", n.value, nil), nil
-	case textCode:
+	case TextCode:
 		return html.NewLeafNode("code", n.value, nil), nil
-	case textLink:
+	case TextLink:
 		return html.NewLeafNode("a", n.value, html.Props{
 			"href": n.url,
 		}), nil
-	case textImage:
+	case TextImage:
 		return html.NewLeafNode("img", "", html.Props{
 			"src": n.url,
 			"alt": n.value,

@@ -9,7 +9,7 @@ func Test_splitNodesDelimiter(t *testing.T) {
 	type args struct {
 		oldNodes  []Node
 		delimiter string
-		textType  textType
+		textType  TextType
 	}
 	tests := []struct {
 		name string
@@ -21,17 +21,17 @@ func Test_splitNodesDelimiter(t *testing.T) {
 			args: args{
 				oldNodes: []Node{
 					{
-						textType: textPlain,
+						textType: TextPlain,
 						value:    "This is **bold** text",
 					},
 				},
 				delimiter: delimiterBold,
-				textType:  textBold,
+				textType:  TextBold,
 			},
 			want: []Node{
-				{textType: textPlain, value: "This is "},
-				{textType: textBold, value: "bold"},
-				{textType: textPlain, value: " text"},
+				{textType: TextPlain, value: "This is "},
+				{textType: TextBold, value: "bold"},
+				{textType: TextPlain, value: " text"},
 			},
 		},
 		{
@@ -39,17 +39,17 @@ func Test_splitNodesDelimiter(t *testing.T) {
 			args: args{
 				oldNodes: []Node{
 					{
-						textType: textPlain,
+						textType: TextPlain,
 						value:    "This is _italic_ text",
 					},
 				},
 				delimiter: delimiterItalic,
-				textType:  textItalic,
+				textType:  TextItalic,
 			},
 			want: []Node{
-				{textType: textPlain, value: "This is "},
-				{textType: textItalic, value: "italic"},
-				{textType: textPlain, value: " text"},
+				{textType: TextPlain, value: "This is "},
+				{textType: TextItalic, value: "italic"},
+				{textType: TextPlain, value: " text"},
 			},
 		},
 		{
@@ -57,17 +57,17 @@ func Test_splitNodesDelimiter(t *testing.T) {
 			args: args{
 				oldNodes: []Node{
 					{
-						textType: textPlain,
+						textType: TextPlain,
 						value:    "This is `code` text",
 					},
 				},
 				delimiter: delimiterCode,
-				textType:  textCode,
+				textType:  TextCode,
 			},
 			want: []Node{
-				{textType: textPlain, value: "This is "},
-				{textType: textCode, value: "code"},
-				{textType: textPlain, value: " text"},
+				{textType: TextPlain, value: "This is "},
+				{textType: TextCode, value: "code"},
+				{textType: TextPlain, value: " text"},
 			},
 		},
 	}
@@ -98,15 +98,15 @@ func Test_splitNodesRef(t *testing.T) {
 			args: args{
 				oldNodes: []Node{
 					{
-						textType: textPlain,
+						textType: TextPlain,
 						value:    "This is [link](https://example.com) text",
 					},
 				},
 			},
 			want: []Node{
-				{textType: textPlain, value: "This is "},
-				{textType: textLink, value: "link", url: "https://example.com"},
-				{textType: textPlain, value: " text"},
+				{textType: TextPlain, value: "This is "},
+				{textType: TextLink, value: "link", url: "https://example.com"},
+				{textType: TextPlain, value: " text"},
 			},
 		},
 		{
@@ -114,15 +114,15 @@ func Test_splitNodesRef(t *testing.T) {
 			args: args{
 				oldNodes: []Node{
 					{
-						textType: textPlain,
+						textType: TextPlain,
 						value:    "This is ![image](https://example.com/image.png) text",
 					},
 				},
 			},
 			want: []Node{
-				{textType: textPlain, value: "This is "},
-				{textType: textImage, value: "image", url: "https://example.com/image.png"},
-				{textType: textPlain, value: " text"},
+				{textType: TextPlain, value: "This is "},
+				{textType: TextImage, value: "image", url: "https://example.com/image.png"},
+				{textType: TextPlain, value: " text"},
 			},
 		},
 		{
@@ -130,17 +130,17 @@ func Test_splitNodesRef(t *testing.T) {
 			args: args{
 				oldNodes: []Node{
 					{
-						textType: textPlain,
+						textType: TextPlain,
 						value:    "This is [link](https://example.com) and ![image](https://example.com/image.png) text",
 					},
 				},
 			},
 			want: []Node{
-				{textType: textPlain, value: "This is "},
-				{textType: textLink, value: "link", url: "https://example.com"},
-				{textType: textPlain, value: " and "},
-				{textType: textImage, value: "image", url: "https://example.com/image.png"},
-				{textType: textPlain, value: " text"},
+				{textType: TextPlain, value: "This is "},
+				{textType: TextLink, value: "link", url: "https://example.com"},
+				{textType: TextPlain, value: " and "},
+				{textType: TextImage, value: "image", url: "https://example.com/image.png"},
+				{textType: TextPlain, value: " text"},
 			},
 		},
 	}

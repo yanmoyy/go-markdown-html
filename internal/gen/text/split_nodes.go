@@ -5,10 +5,10 @@ import (
 	"strings"
 )
 
-func splitNodesDelimiter(oldNodes []Node, delimiter string, textType textType) ([]Node, error) {
+func splitNodesDelimiter(oldNodes []Node, delimiter string, textType TextType) ([]Node, error) {
 	newNodes := []Node{}
 	for _, node := range oldNodes {
-		if node.textType != textPlain {
+		if node.textType != TextPlain {
 			newNodes = append(newNodes, node)
 			continue
 		}
@@ -23,7 +23,7 @@ func splitNodesDelimiter(oldNodes []Node, delimiter string, textType textType) (
 			if i%2 == 0 {
 				// not inside delimiter
 				newNodes = append(newNodes, Node{
-					textType: textPlain,
+					textType: TextPlain,
 					value:    sec,
 				})
 			} else {
@@ -41,7 +41,7 @@ func splitNodesDelimiter(oldNodes []Node, delimiter string, textType textType) (
 func splitNodesRef(oldNodes []Node) ([]Node, error) {
 	newNodes := []Node{}
 	for _, node := range oldNodes {
-		if node.textType != textPlain {
+		if node.textType != TextPlain {
 			newNodes = append(newNodes, node)
 			continue
 		}
@@ -51,13 +51,13 @@ func splitNodesRef(oldNodes []Node) ([]Node, error) {
 		}
 		cur := 0
 		for _, ref := range refs {
-			textType := textLink
+			textType := TextLink
 			if ref.refType == refImage {
-				textType = textImage
+				textType = TextImage
 			}
 			if ref.start > cur {
 				newNodes = append(newNodes, Node{
-					textType: textPlain,
+					textType: TextPlain,
 					value:    node.value[cur:ref.start],
 				})
 			}
@@ -70,7 +70,7 @@ func splitNodesRef(oldNodes []Node) ([]Node, error) {
 		}
 		if cur < len(node.value) {
 			newNodes = append(newNodes, Node{
-				textType: textPlain,
+				textType: TextPlain,
 				value:    node.value[cur:],
 			})
 		}

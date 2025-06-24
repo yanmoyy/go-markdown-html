@@ -13,17 +13,17 @@ const (
 
 func TextToTextNodes(text string) ([]Node, error) {
 	nodes := []Node{
-		{textType: textPlain, value: text},
+		{textType: TextPlain, value: text},
 	}
-	nodes, err := splitNodesDelimiter(nodes, delimiterBold, textBold)
+	nodes, err := splitNodesDelimiter(nodes, delimiterBold, TextBold)
 	if err != nil {
 		return nil, fmt.Errorf("error (bold): ")
 	}
-	nodes, err = splitNodesDelimiter(nodes, delimiterItalic, textItalic)
+	nodes, err = splitNodesDelimiter(nodes, delimiterItalic, TextItalic)
 	if err != nil {
 		return nil, fmt.Errorf("error (italic): ")
 	}
-	nodes, err = splitNodesDelimiter(nodes, delimiterCode, textCode)
+	nodes, err = splitNodesDelimiter(nodes, delimiterCode, TextCode)
 	if err != nil {
 		return nil, fmt.Errorf("error (code): ")
 	}
