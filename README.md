@@ -19,6 +19,9 @@ You can also put static files in `./files/static` and they will be copied to
 
 You can see example files in `./files/`.
 
+or look at the
+[static site](https://yanmoyy.github.io/go-static-site-generator/).
+
 ### Commands
 
 Generate html files from markdown files
