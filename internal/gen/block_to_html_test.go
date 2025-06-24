@@ -95,3 +95,63 @@ func TestBlockToHTML(t *testing.T) {
 		})
 	}
 }
+
+func TestMarkdownToHTMLNode(t *testing.T) {
+	type args struct {
+		markdown string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    html.Node
+		wantErr bool
+	}{
+		{
+			name: "sample markdown",
+			args: args{
+				markdown: `
+This is **bolded** paragraph
+
+This is another paragraph with _italic_ text and ` + "`code`" + ` here
+This is the same paragraph on a new line
+
+- This is a list
+- with items
+`,
+			},
+			want: html.NewParentNode("div", []html.Node{
+				html.NewParentNode("p", []html.Node{
+					html.NewLeafNode("p", "This is ", nil),
+					html.NewLeafNode("b", "bolded", nil),
+					html.NewLeafNode("p", " paragraph", nil),
+				}, nil),
+				html.NewParentNode("p", []html.Node{
+					html.NewLeafNode("p", "This is another paragraph with ", nil),
+					html.NewLeafNode("i", "italic", nil),
+					html.NewLeafNode("p", " text and ", nil),
+					html.NewLeafNode("code", "code", nil),
+					html.NewLeafNode("p", " here This is the same paragraph on a new line", nil),
+				}, nil),
+				html.NewParentNode("ul", []html.Node{
+					html.NewParentNode("li", []html.Node{
+						html.NewLeafNode("p", "This is a list", nil),
+					}, nil),
+					html.NewParentNode("li", []html.Node{
+						html.NewLeafNode("p", "with items", nil),
+					}, nil),
+				}, nil),
+			}, nil),
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := markdownToHTMLNode(tt.args.markdown)
+			if tt.wantErr {
+				assert.Error(t, err)
+				return
+			}
+			assert.NoError(t, err)
+			assert.Equal(t, tt.want, got)
+		})
+	}
+}

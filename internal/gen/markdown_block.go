@@ -3,6 +3,8 @@ package gen
 import (
 	"fmt"
 	"strings"
+
+	"github.com/yanmoyy/go-markdown-html/internal/gen/html"
 )
 
 type blockType int
@@ -33,6 +35,19 @@ func (t blockType) String() string {
 	default:
 		return "unknown"
 	}
+}
+
+func markdownToHTMLNode(markdown string) (html.Node, error) {
+	blocks := markdownToBlocks(markdown)
+	children := []html.Node{}
+	for _, block := range blocks {
+		node, err := blockToHTML(block)
+		if err != nil {
+			return html.Node{}, err
+		}
+		children = append(children, node)
+	}
+	return html.NewParentNode("div", children, nil), nil
 }
 
 func markdownToBlocks(markdown string) []string {
